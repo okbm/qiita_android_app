@@ -8,6 +8,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import android.util.Log
+import android.widget.ArrayAdapter
+import android.widget.ListView
 
 class MainActivity : AppCompatActivity() {
 
@@ -33,6 +35,15 @@ class MainActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     response.body()?.let {
                         Log.d("fetchItems", "response success")
+                        var items = mutableListOf<String>()
+
+                        for (item in it) {
+                            items.add(item.title)
+                        }
+
+                        val adapter = ArrayAdapter<String>(this@MainActivity, android.R.layout.simple_list_item_1, items)
+                        val list: ListView = findViewById(R.id.list_item);
+                        list.adapter  = adapter
                     }
                 }
                 Log.d("fetchItems", "response code:" + response.code())
